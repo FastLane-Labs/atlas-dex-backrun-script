@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@fastlane-labs/atlas-sdk": "^1.2.1",
+    "@fastlane-labs/atlas-sdk": "^2.0.1",
     "@rhinestone/module-sdk": "^0.1.29",
     "dotenv": "^16.4.7",
     "ethers": "^6.13.4",
