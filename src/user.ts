@@ -7,7 +7,7 @@ import {
   http,
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { baseSepolia } from "viem/chains";
+import { monadTestnet } from "viem/chains";
 import demoErc20Abi from "./abi/demoErc20.json";
 import dotenv from "dotenv";
 
@@ -20,14 +20,14 @@ const RPC_URL = process.env.RPC_URL;
 const eoa = privateKeyToAccount(EOA_PK);
 
 export const eoaClient = createWalletClient({
-  chain: baseSepolia,
+  chain: monadTestnet,
   transport: http(process.env.RPC_URL),
   account: eoa,
 });
 
 export const publicClient = createPublicClient({
   transport: http(RPC_URL),
-  chain: baseSepolia,
+  chain: monadTestnet,
 });
 
 function getErc20Contract(address: Hex) {

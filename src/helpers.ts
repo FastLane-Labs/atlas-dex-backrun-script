@@ -19,9 +19,9 @@ export async function mintErc20IfNeeded(
   }
 
   const userAddress = client.account?.address as Hex;
-  const balance: bigint = await demoErc20UserIsSelling.read.balanceOf([
+  const balance = (await demoErc20UserIsSelling.read.balanceOf([
     userAddress,
-  ]);
+  ])) as bigint;
 
   if (balance >= amountToApprove) {
     console.log("User already has enough tokens, skipping mint");
@@ -57,10 +57,10 @@ export async function approveErc20IfNeeded(
 
   const atlasAddress = (await atlasSdk.getAtlasAddress()) as Hex;
 
-  const allowance = await demoErc20UserIsSelling.read.allowance([
+  const allowance = (await demoErc20UserIsSelling.read.allowance([
     client.account?.address,
     atlasAddress,
-  ]);
+  ])) as bigint;
 
   if (allowance >= amountToApprove) {
     console.log("User already has enough allowance, skipping approval");

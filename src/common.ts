@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const chainId = 84532; // Base Sepolia
+export const chainId = 10143; // Monad Testnet
 export const provider = new ethers.JsonRpcProvider(
   process.env.RPC_URL,
   chainId

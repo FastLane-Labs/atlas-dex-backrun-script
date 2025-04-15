@@ -7,7 +7,7 @@ import {
   sendTokensToSolverIfNeeded,
 } from "./helpers";
 import { eoaClient, publicClient } from "./user";
-import { Client, Hex, zeroAddress } from "viem";
+import { Client, Hex, zeroAddress, PublicClient } from "viem";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -24,21 +24,29 @@ export async function setupAtlas(walletClient: Client): Promise<Bundle> {
   let recipient;
 
   if (process.env.USER_BUY_TOKEN_ADDRESS === zeroAddress) {
-    recipient = process.env.UNISWAP_V3_ROUTER_ADDRESS as Hex;
+    recipient = process.env.UNISWAP_V2_ROUTER_ADDRESS as Hex;
   } else {
     recipient = executionEnvironment;
   }
 
   const [amountToApprove, data] = await encodeUserOpData(
-    publicClient,
+    publicClient as PublicClient,
     Number(process.env.SWAP_TYPE),
-    recipient,
-    executionEnvironment
+    recipient
   );
+
+  // const hash = await eoaClient.sendTransaction({
+  //   to: process.env.UNISWAP_V2_ROUTER_ADDRESS as Hex,
+  //   data,
+  //   value: amountToApprove,
+  // });
+
+  // await publicClient.waitForTransactionReceipt({ hash });
+  // console.log("Swapped tokens");
+  // console.log("hash", hash);
 
   console.log("Generated swap data");
 
-  await mintErc20IfNeeded(walletClient, amountToApprove);
   await approveErc20IfNeeded(walletClient, amountToApprove);
 
   await sendTokensToSolverIfNeeded(
@@ -63,7 +71,7 @@ export async function setupAtlas(walletClient: Client): Promise<Bundle> {
     gas: BigInt(3_000_000), // Hardcoded for demo
     maxFeePerGas: (suggestedFeeData.maxFeePerGas as bigint) * BigInt(2),
     deadline: BigInt(currentBlockNumber + 10),
-    dapp: process.env.UNISWAP_V3_ROUTER_ADDRESS as string,
+    dapp: process.env.UNISWAP_V2_ROUTER_ADDRESS as string,
     control: process.env.DAPP_CONTROL_ADDRESS as string,
     sessionKey: process.env.AUCTIONEER_ADDRESS as string,
     data,
