@@ -3,7 +3,6 @@ import { provider, atlasSdk } from "./common";
 import { encodeUserOpData } from "./userOpData";
 import {
   approveErc20IfNeeded,
-  mintErc20IfNeeded,
   sendTokensToSolverIfNeeded,
 } from "./helpers";
 import { eoaClient, publicClient } from "./user";
@@ -34,16 +33,6 @@ export async function setupAtlas(walletClient: Client): Promise<Bundle> {
     Number(process.env.SWAP_TYPE),
     recipient
   );
-
-  // const hash = await eoaClient.sendTransaction({
-  //   to: process.env.UNISWAP_V2_ROUTER_ADDRESS as Hex,
-  //   data,
-  //   value: amountToApprove,
-  // });
-
-  // await publicClient.waitForTransactionReceipt({ hash });
-  // console.log("Swapped tokens");
-  // console.log("hash", hash);
 
   console.log("Generated swap data");
 
@@ -86,7 +75,6 @@ export async function setupAtlas(walletClient: Client): Promise<Bundle> {
     {},
     {
       auctionDurationInMillis: 1500, // Longer duration for the demo
-      // disableBundling: true, // Disable Atlas bundler, we bundle ourselves
     }
   )) as Bundle;
 
