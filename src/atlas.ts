@@ -81,10 +81,14 @@ export async function setupAtlas(walletClient: Client): Promise<Bundle> {
 
   console.log("Sending user operation to FastLane auctioneer");
 
-  const bundle = (await atlasSdk.submitUserOperation(atlasUserOperation, [], {
-    auctionDurationInMillis: 1500, // Longer duration for the demo
-    disableBundling: true, // Disable Atlas bundler, we bundle ourselves
-  })) as Bundle;
+  const bundle = (await atlasSdk.submitUserOperation(
+    atlasUserOperation,
+    {},
+    {
+      auctionDurationInMillis: 1500, // Longer duration for the demo
+      // disableBundling: true, // Disable Atlas bundler, we bundle ourselves
+    }
+  )) as Bundle;
 
   console.log("Atlas bundle received");
 
