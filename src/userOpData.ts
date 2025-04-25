@@ -10,7 +10,7 @@ import {
 export async function encodeUserOpData(
   publicClient: PublicClient,
   swapType: number,
-  recipient: Hex,
+  recipient: Hex
 ): Promise<[bigint, Hex]> {
   let [amountToApprove, amountOut, data] = await encodeSwapData(
     publicClient,
@@ -28,7 +28,7 @@ async function getAmountOutMin(publicClient: PublicClient): Promise<bigint> {
   const tokenOut = process.env.USER_BUY_TOKEN_ADDRESS as Hex;
   const amountIn = BigInt(process.env.USER_SELL_TOKEN_AMOUNT as string);
   const weth = process.env.WETH_ADDRESS as Hex;
-  
+
   // Create path array for UniswapV2
   const path = [
     tokenIn === zeroAddress ? weth : tokenIn,
@@ -52,7 +52,7 @@ async function getAmountInMax(publicClient: PublicClient): Promise<bigint> {
   const tokenOut = process.env.USER_BUY_TOKEN_ADDRESS as Hex;
   const amountOut = BigInt(process.env.USER_BUY_TOKEN_AMOUNT as string);
   const weth = process.env.WETH_ADDRESS as Hex;
-  
+
   // Create path array for UniswapV2
   const path = [
     tokenIn === zeroAddress ? weth : tokenIn,

@@ -21,11 +21,10 @@ const metacallCalldata = atlasSdk.getMetacallCalldata(
   bundle.dAppOperation
 );
 
-let gasLimit = bundle.userOperation.getField("gas").value as bigint;
-for (const solverOp of bundle.solverOperations) {
-  gasLimit += (solverOp.getField("gas").value as bigint) * BigInt(2);
-}
-gasLimit += BigInt(500_000); // Buffer for metacall validation
+const gasLimit = await atlasSdk.getMetacallGasLimit(
+  bundle.userOperation,
+  bundle.solverOperations
+);
 
 console.log("User sending transaction (self bundling)");
 

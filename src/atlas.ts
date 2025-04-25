@@ -1,10 +1,7 @@
 import { Bundle } from "@fastlane-labs/atlas-sdk";
 import { provider, atlasSdk } from "./common";
 import { encodeUserOpData } from "./userOpData";
-import {
-  approveErc20IfNeeded,
-  sendTokensToSolverIfNeeded,
-} from "./helpers";
+import { approveErc20IfNeeded, sendTokensToSolverIfNeeded } from "./helpers";
 import { eoaClient, publicClient } from "./user";
 import { Client, Hex, zeroAddress, PublicClient } from "viem";
 import dotenv from "dotenv";
@@ -59,7 +56,7 @@ export async function setupAtlas(walletClient: Client): Promise<Bundle> {
         : BigInt(0),
     gas: BigInt(3_000_000), // Hardcoded for demo
     maxFeePerGas: (suggestedFeeData.maxFeePerGas as bigint) * BigInt(2),
-    deadline: BigInt(currentBlockNumber + 10),
+    deadline: BigInt(currentBlockNumber + 50),
     dapp: process.env.UNISWAP_V2_ROUTER_ADDRESS as string,
     control: process.env.DAPP_CONTROL_ADDRESS as string,
     sessionKey: process.env.AUCTIONEER_ADDRESS as string,
