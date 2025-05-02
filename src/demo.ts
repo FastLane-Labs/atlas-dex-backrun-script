@@ -25,6 +25,7 @@ const gasLimit = await atlasSdk.getMetacallGasLimit(
   bundle.userOperation,
   bundle.solverOperations
 );
+console.log("Gas limit:", gasLimit);
 
 console.log("User sending transaction (self bundling)");
 

@@ -84,7 +84,7 @@ async function encodeSwapData(
       ? BigInt(process.env.USER_SELL_TOKEN_AMOUNT as string)
       : BigInt(process.env.USER_BUY_TOKEN_AMOUNT as string);
   const weth = process.env.WETH_ADDRESS as Hex;
-  const deadline = BigInt(Math.floor(Date.now() / 1000) + 60 * 20); // 20 minutes from now
+  const deadline = BigInt(Math.floor(Date.now() / 1000) + 60 * 200); // 20 minutes from now
 
   if (tokenIn === tokenOut) {
     throw new Error("Token in and token out cannot be the same");

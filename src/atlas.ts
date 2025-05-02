@@ -54,16 +54,14 @@ export async function setupAtlas(walletClient: Client): Promise<Bundle> {
       process.env.USER_SELL_TOKEN_ADDRESS == zeroAddress
         ? BigInt(process.env.USER_SELL_TOKEN_AMOUNT as string)
         : BigInt(0),
-    gas: BigInt(3_000_000), // Hardcoded for demo
+    gas: BigInt(400_000), // Hardcoded for demo
     maxFeePerGas: (suggestedFeeData.maxFeePerGas as bigint) * BigInt(2),
-    deadline: BigInt(currentBlockNumber + 50),
+    deadline: BigInt(currentBlockNumber + 50000),
     dapp: process.env.UNISWAP_V2_ROUTER_ADDRESS as string,
     control: process.env.DAPP_CONTROL_ADDRESS as string,
     sessionKey: process.env.AUCTIONEER_ADDRESS as string,
     data,
   });
-
-  console.log("Generated user operation (unsigned)");
 
   console.log("Sending user operation to FastLane auctioneer");
 
@@ -71,7 +69,7 @@ export async function setupAtlas(walletClient: Client): Promise<Bundle> {
     atlasUserOperation,
     {},
     {
-      auctionDurationInMillis: 1500, // Longer duration for the demo
+      auctionDurationInMillis: 2000, // Longer duration for the demo
     }
   )) as Bundle;
 
