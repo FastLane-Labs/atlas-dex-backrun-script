@@ -4,7 +4,6 @@ import {
   Hex,
   zeroAddress,
   PublicClient,
-  Client,
 } from "viem";
 
 export async function encodeUserOpData(
