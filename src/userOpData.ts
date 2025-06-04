@@ -43,7 +43,7 @@ async function getAmountOutMin(publicClient: PublicClient): Promise<bigint> {
 
   // Return the output amount (last element in the amounts array)
   const amounts = result as bigint[];
-  return amounts[amounts.length - 1];
+  return (amounts[amounts.length - 1] * 99n) / 100n;
 }
 
 async function getAmountInMax(publicClient: PublicClient): Promise<bigint> {
@@ -68,7 +68,7 @@ async function getAmountInMax(publicClient: PublicClient): Promise<bigint> {
   // Return the input amount (first element in the amounts array)
   // Type assertion to handle the bigint[] type
   const amounts = result as bigint[];
-  return amounts[0];
+  return (amounts[0] * 99n) / 100n;
 }
 
 async function encodeSwapData(

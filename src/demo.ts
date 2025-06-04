@@ -27,22 +27,23 @@ console.log("data", data);
 await approveErc20IfNeeded(eoaClient, amountToApprove);
 
 async function sendUnsignedTransaction(data: Hex) {
-  const auctioneerEndpoint = process.env.AUCTIONEER_ENDPOINT || "http://localhost:8080";
+  const auctioneerEndpoint = process.env.AUCTIONEER_ENDPOINT as string;
   
   const payload = {
     jsonrpc: "2.0",
-    method: "fastlane_sendUnsignedTransaction",
+    method: "atlas_sendUnsignedTransaction",
     params: [{
       transaction: {
         chainId: 10143,
         from: userAddress,
         to: process.env.UNISWAP_V2_ROUTER_ADDRESS as Hex,
         value: "0x0",
-        data: data
+        data: data,
+        maxFeePerGas: "0x2E90EDD000",
       },
       refundRecipient: refundRecipient,
       refundPercent: refundPercent,
-      bidTokenIsOutputToken: false,
+      bidTokenIsOutputToken: true,
     }],
     id: 1
   };
