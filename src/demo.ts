@@ -7,23 +7,24 @@ import { approveErc20IfNeeded } from "./helpers";
 interface SendUnsignedTransactionResponse {
   from: Hex;
   to: Hex;
-  value: bigint;
+  value: Hex;
   data: Hex;
-  gas: bigint;
-  maxFeePerGas: bigint;
+  gas: Hex;
+  maxFeePerGas: Hex;
 }
 
 const userAddress = eoaClient.account?.address as Hex;
 const refundRecipient = process.env.REFUND_RECIPIENT as Hex;
-const refundPercent = Number(process.env.REFUND_PERCENT);
+const refundPercent = process.env.REFUND_PERCENT as Hex;
+const chainId = process.env.CHAIN_ID as Hex;
+const router = process.env.UNISWAP_V2_ROUTER_ADDRESS as Hex;
+const maxFeePerGas = "0x2E90EDD000";
 
 const [amountToApprove, data] = await encodeUserOpData(
   publicClient as PublicClient,
   Number(process.env.SWAP_TYPE),
   userAddress
 );
-
-console.log("data", data);
 await approveErc20IfNeeded(eoaClient, amountToApprove);
 
 async function sendUnsignedTransaction(data: Hex) {
@@ -34,12 +35,12 @@ async function sendUnsignedTransaction(data: Hex) {
     method: "atlas_sendUnsignedTransaction",
     params: [{
       transaction: {
-        chainId: 10143,
+        chainId: chainId,
         from: userAddress,
-        to: process.env.UNISWAP_V2_ROUTER_ADDRESS as Hex,
+        to: router,
         value: "0x0",
         data: data,
-        maxFeePerGas: "0x2E90EDD000",
+        maxFeePerGas: maxFeePerGas,
       },
       refundRecipient: refundRecipient,
       refundPercent: refundPercent,
